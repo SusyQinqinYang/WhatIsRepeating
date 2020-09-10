@@ -34,7 +34,7 @@ This can be deployed using AWS.
 
 - [React](https://reactjs.org/docs/forms.html) - Web Framework
 - [Node](https://redux.js.org/) - Back End development platform
-- 
+  
 ## Authors
 
 - **Susy(Qinqin) Yang**
