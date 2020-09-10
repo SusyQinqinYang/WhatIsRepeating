@@ -11,23 +11,37 @@ app.use(bodyParser.json())
 //frontend
 app.use(express.static(__dirname + "/../client/dist"));
 
-//API routes
-let storage = [];
-//get route
-app.use("/get", (req, res) => {
-    var resStr = storage.join(',');
-    if (!storage.length) {
-        res.status(404).send(`You haven't told me anything yet.`)
-    } else {
-        res.json(resStr);
+//word transform function
+function repeatedWordTransform(str) {
+    let upperCount = {};
+    let occurrenceRecord = new Map();
+    let res = '';
+    for (let char of str) {
+        if (char.toLowerCase() !== char) {
+            upperCount[char.toLowerCase()] = upperCount[char.toLowerCase()] + 1 || 1;
+        }
+        let lowerChar = char.toLowerCase();
+        //use map to remain the original order
+        occurrenceRecord.set(lowerChar, occurrenceRecord.get(lowerChar) + 1 || 1)
     }
-});
+
+    let repeat ='';
+    for (let [ele, val] of occurrenceRecord) {
+        if (val == 1) {
+            res += upperCount[ele] ? ele.toUpperCase() : ele;
+        } else {
+            let upTimes = upperCount[ele] || 0;
+            repeat += ele.toUpperCase().repeat(upTimes) + ele.repeat(val - upTimes);
+        }
+    }
+    return res + repeat;
+}
 
 //post route
 app.use("/post", (req, res) => {
-    var text = req.body.text;
-    storage.push(text);
-    res.sendStatus(201);
+    let text = req.body.text;
+    let newText = repeatedWordTransform(text)
+    res.json(newText);
 });
 
 app.listen(PORT, () => {

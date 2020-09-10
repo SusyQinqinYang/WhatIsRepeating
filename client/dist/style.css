@@ -1,0 +1,7 @@
+body {
+    background-color: rgba(185, 185, 185, 0.977);
+  }
+.header {
+  background-image: url("https://cdn.pixabay.com/photo/2019/06/22/12/53/galaxy-4291517_1280.jpg");
+  padding: 50px 0px;
+}
